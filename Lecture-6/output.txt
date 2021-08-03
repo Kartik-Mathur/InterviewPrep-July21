@@ -1,0 +1,7 @@
+Number of setbits: 1, 2  Product: 2
+Number of setbits: 1, 3  Product: 3
+Number of setbits: 2, 2 3  Product: 6
+Number of setbits: 1, 5  Product: 5
+Number of setbits: 2, 2 5  Product: 10
+Number of setbits: 2, 3 5  Product: 15
+Number of setbits: 3, 2 3 5  Product: 30
