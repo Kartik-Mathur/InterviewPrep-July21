@@ -1,66 +1,44 @@
-// LinearDiophantine.cpp
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
 
-int gcd1(int a, int b) {
-	if (b == 0) return a;
+int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
 
-	return gcd1(b, a % b);
+	int total = 0 ;
+	int cur = 0 ;
+	int s = 0;
+	for (int i = 0 ; i < gas.size() ; i++) {
+		total = total + gas[i] - cost[i];
+		cur += gas[i] - cost[i];
+		if (cur < 0) {
+			cur =  0 ;
+			s = i + 1 ;
+		}
+	}
+	if (total >= 0 )
+		return s;
+	else
+		return -1;
+
 }
 
-int x, y, gcd;
-void ExtendedEuclidAlgo(int a, int b) {
-	if (b == 0)	{
-		gcd = a;
-		x = 1, y = 0;
-		return;
+int main () {
+
+	int n ;
+	cin >> n;
+
+	vector<int>gas(n);
+	vector<int>cost(n);
+
+
+	for (int i = 0; i < n; i++) {
+		cin >> gas[i];
+	}
+	for (int i = 0; i < n; i++) {
+		cin >> cost[i];
 	}
 
-	ExtendedEuclidAlgo(b, a % b);
-	int cx = y;
-	int cy = x - (a / b) * y;
-	// cout << cx << " " << cy << endl;
-	x = cx;
-	y = cy;
+	int ans = canCompleteCircuit(gas, cost);
+
+	cout << ans;
+
 }
-
-int main() {
-
-	// int a, b;
-	// cin >> a >> b;
-	int totalamount = 100;
-	int applesprice = 25;
-	int organesprice = 18;
-
-	int g = gcd1(applesprice, organesprice);
-
-	cout << g << endl;
-	if (( totalamount % g ) != 0) {
-		cout << "Not possible" << endl;
-		return 0;
-	}
-	else {
-		ExtendedEuclidAlgo(applesprice, organesprice);
-
-		cout << "Apples : " << x << ", Oranges: " << y << endl;
-		cout << applesprice*x + organesprice*y << endl;
-	}
-
-	return 0;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
