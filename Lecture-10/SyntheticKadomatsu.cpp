@@ -1,6 +1,7 @@
 // SyntheticKadomatsu.cpp
 // https://atcoder.jp/contests/abc119/tasks/abc119_c
 #include <iostream>
+#include <climits>
 using namespace std;
 #define ll long long
 
@@ -11,7 +12,7 @@ ll solve(ll x, ll y, ll z, ll i) {
 	// base case
 	if (i == n) {
 		if (x == 0 || y == 0 || z == 0) {
-			return 1e10;
+			return INT_MAX;
 		}
 		return abs(x - A) + abs(y - B) + abs(z - C);
 	}
