@@ -1,10 +1,10 @@
-_ Q _ _ 
-_ _ _ Q 
-Q _ _ _ 
-_ _ Q _ 
-
-_ _ Q _ 
-Q _ _ _ 
-_ _ _ Q 
-_ Q _ _ 
-
+abac
+abca
+acab
+acba
+baac
+baca
+bcaa
+caab
+caba
+cbaa
