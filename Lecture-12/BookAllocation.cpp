@@ -6,7 +6,6 @@ using namespace std;
 #define ll long long
 
 bool isPossible(ll *books, ll n, ll total_students, ll curr_minimum) {
-
 	ll students_used = 1;
 	ll pages_allocated = 0;
 
