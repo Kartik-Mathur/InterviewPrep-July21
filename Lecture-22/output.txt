@@ -1,0 +1,6 @@
+9
+For i 0 comparing 0 and 1
+For i 0 comparing 0 and 2
+For i 0 comparing 0 and 3
+9
+9
