@@ -1,3 +1,4 @@
+// CycleDetectionUndirected.cpp
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -56,95 +57,82 @@ public:
 		}
 	}
 
-	void ts_helper(T node, unordered_map<T, bool> &visited, list<T> &ans) {
-		visited[node] = true;
-		for (auto neighbours : adj[node]) {
-			if (!visited[neighbours]) {
-				ts_helper(neighbours, visited, ans);
+	bool cycle_undirectedBFS(T src) {
+		unordered_map<T, bool> visited;
+		unordered_map<T, T> parent;
+		queue<T> q;
+
+		q.push(src);
+		parent[src] = src;
+		visited[src] = true;
+
+		while (!q.empty()) {
+			T node = q.front();
+			q.pop();
+
+
+			for (auto neighbour : adj[node]) {
+				if (visited[neighbour] and parent[node] != neighbour) {
+					return true;
+				}
+				else if (!visited[neighbour]) {
+					visited[neighbour] = true;
+					parent[neighbour] = node;
+					q.push(neighbour);
+				}
 			}
 		}
-		ans.push_front(node);
+
+		return false;
 	}
 
-	void topologicalSort() {
-		list<T> ans;
+	bool cycleD_DFS_helper(T node, unordered_map<T, bool> &visited, unordered_map<T, bool> &inStack) {
+		visited[node] = true;
+		inStack[node] = true;
+
+		// Now iterate over the neighbours of the current node
+		// and if the neighbour is present in the stack that means cycle is there
+		for (auto neighbour : adj[node]) {
+			if (!visited[neighbour] and cycleD_DFS_helper(neighbour, visited, inStack) ||
+			        inStack[neighbour]) {
+				// inStack[neighbour]: Agar neighbour ancestor hai, toh cycle is present
+				return true;
+			}
+		}
+
+		inStack[node] = false; // Backtracking
+		return false;
+	}
+
+
+	bool cycleDetection_DirectedDFS() {
+
 		unordered_map<T, bool> visited;
+		unordered_map<T, bool> inStack; // Will only store the ancestors of current
+		// node
 
 		for (auto p : adj) {
 			T node = p.first;
 			if (!visited[node]) {
-				ts_helper(node, visited, ans);
+				bool kyaCycleHai = cycleD_DFS_helper(node, visited, inStack);
+				if (kyaCycleHai) return true;
 			}
 		}
-
-		for (auto data : ans) {
-			cout << data << "-->";
-		}
-		cout << endl;
+		return false;
 	}
 
-	void bsf_topologicalSort() {
-		unordered_map<T, int> indegree;
-		queue<T> q;
 
-		// Initialize Indegree to 0
-		for (auto p : adj) {
-			T node = p.first;
-			indegree[node] = 0;
-		}
-
-		// Calculating the indegree of every node
-		for (auto p : adj) {
-			T node = p.first;
-			for (auto neighbours : p.second) {
-				indegree[neighbours] ++;
-			}
-		}
-
-		// Initialize the queue
-		for (auto p : adj) {
-			T node = p.first;
-			if (indegree[node] == 0) {
-				q.push(node);
-			}
-		}
-
-		// Now let's see the Algorithm
-		while (!q.empty()) {
-			T node = q.front();
-			q.pop();
-			cout << node << "-->";
-
-			for (auto neighbours : adj[node]) {
-				indegree[neighbours]--;
-				if (indegree[neighbours] == 0) {
-					q.push(neighbours);
-				}
-			}
-		}
-		cout << endl;
-
-	}
 };
 
 void solve() {
-	Graph<string> g;
+	Graph<int> g;
 
-	g.addEdge("Maths", "Programming Logic", false);
-	g.addEdge("English", "Programming Logic", false);
-	g.addEdge("Programming Logic", "HTML", false);
-	g.addEdge("Programming Logic", "JS", false);
-	g.addEdge("Programming Logic", "C++", false);
-	g.addEdge("Programming Logic", "Java", false);
-	g.addEdge("Maths", "HTML", false);
-	g.addEdge("HTML", "CSS" , false);
-	g.addEdge("CSS", "JS" , false);
-	g.addEdge("JS", "Web Dev" , false);
-	g.addEdge("C++", "Web Dev" , false);
-	g.addEdge("Java", "Web Dev" , false);
+	g.addEdge(0, 1);
+	g.addEdge(3, 1);
+	g.addEdge(0, 2);
+	g.addEdge(2, 3);
 
-	g.topologicalSort();
-	g.bsf_topologicalSort();
+	cout << g.cycle_undirectedBFS(0) << endl;
 
 }
 
