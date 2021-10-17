@@ -73,6 +73,8 @@ public:
 
 			for (auto neighbour : adj[node]) {
 				if (visited[neighbour] and parent[node] != neighbour) {
+					// if visited hai aur neighbour current node ka parent nhi h
+					// Toh cycle hai
 					return true;
 				}
 				else if (!visited[neighbour]) {
@@ -115,6 +117,38 @@ public:
 			T node = p.first;
 			if (!visited[node]) {
 				bool kyaCycleHai = cycleD_DFS_helper(node, visited, inStack);
+				if (kyaCycleHai) return true;
+			}
+		}
+		return false;
+	}
+
+	bool ud_cycle_dfs_helper(T node, unordered_map<T, bool> &visited, unordered_map<T, bool> &parent) {
+		visited[node] = true;
+
+		for (auto neighbour : adj[node]) {
+			if (!visited[neighbour]) {
+				parent[neighbour] = node;
+				bool kyaCycleHai = ud_cycle_dfs_helper(neighbour, visited, parent);
+				if (kyaCycleHai) return true;
+			}
+			else if (neighbour != parent[node]) {
+				// Jis neighbour par gaye, vo visited hai aur vo current node ka parent nhi h
+				// This means cycle hai
+				return true;
+			}
+		}
+		return false;
+	}
+
+	bool ud_cycle_dfs() {
+		unordered_map<T, bool> visited;
+		unordered_map<T, bool> parent;
+
+		for (auto p : adj) {
+			T node = p.first;
+			if (!visited[node]) {
+				bool kyaCycleHai = ud_cycle_dfs_helper(node, visited, inStack);
 				if (kyaCycleHai) return true;
 			}
 		}
