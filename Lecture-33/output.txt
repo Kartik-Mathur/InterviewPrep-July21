@@ -1,0 +1,8 @@
+D-->(C,3) (A,8) 
+C-->(B,2) (D,3) (A,4) 
+B-->(A,1) (C,2) 
+A-->(B,1) (C,4) (D,8) 
+Distance of A from A : 0
+Distance of B from A : 1
+Distance of C from A : 3
+Distance of D from A : 6

@@ -106,7 +106,6 @@ public:
 		return false;
 	}
 
-
 	bool cycleDetection_DirectedDFS() {
 
 		unordered_map<T, bool> visited;
