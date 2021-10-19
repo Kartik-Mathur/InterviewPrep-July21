@@ -1,5 +1,6 @@
-// DSU.cpp
+// PairingProblem.cpp
 #include <iostream>
+#include <vector>
 using namespace std;
 
 class dsu {
@@ -34,14 +35,39 @@ public:
 				swap(spa, spb);
 			}
 			size[spa] += size[spb];
+			size[spb] = 0;
 			parent[spb] = spa;
 
 		}
 	}
+
+	int solve(int n) {
+		int ans = 0;
+		for (int i = 0; i < n; ++i)
+		{
+			int sp = get(i);
+			ans += n - size[sp];
+		}
+		return ans / 2;
+	}
 };
 
 int main() {
+#ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+#endif
+	int n, m, a, b;
+	cin >> n >> m;
+	dsu g(n);
 
+	for (int i = 0; i < m; ++i)
+	{
+		cin >> a >> b;
+		g.union_set(a, b); // o(1)*m
+	}
+
+	cout << g.solve(n) << endl;
 
 	return 0;
 }
